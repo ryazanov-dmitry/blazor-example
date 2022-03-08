@@ -1,10 +1,14 @@
+using Microsoft.AspNetCore.Components;
+
 namespace blazor_example.Data;
 
 public class DataSource
 {
-    public static List<DataModel> GetData()
-    {
-        return new List<DataModel> {
+
+    public static event Action OnChange;
+
+    public static List<DataModel> Data =
+        new List<DataModel> {
             new DataModel{
                 Id = Guid.NewGuid(),
                 Name = "Sintetic Data 1"
@@ -18,6 +22,21 @@ public class DataSource
                 Name = "Sintetic Data 3"
             },
         };
+
+    public static List<DataModel> GetData()
+    {
+        return Data;
+    }
+
+    public static void AddData(string name)
+    {
+        Data.Add(new DataModel
+        {
+            Id = Guid.NewGuid(),
+            Name = name
+        });
+
+        OnChange?.Invoke();
     }
 }
 

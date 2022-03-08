@@ -1,0 +1,23 @@
+@namespace blazor_example.Components
+
+
+<EditForm Model="@Model" OnSubmit="@HandleSubmit">
+
+    <InputText id="name" @bind-Value="Model.Value" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
+@code {
+
+    public class FormModel
+    {
+        public string Value { get; set; }
+    }
+    private FormModel Model { get; set; } = new FormModel();
+
+    private void HandleSubmit()
+    {
+        DataSource.AddData(Model.Value);
+    }
+}
