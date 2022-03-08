@@ -1,0 +1,30 @@
+@namespace blazor_example.Components
+
+@if (Collection == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+    <table>
+    <tr>
+        <td>Id</td>
+        <td>Name</td>
+    </tr>
+    @foreach (var item in Collection)
+    {
+        <tr>
+            <td>@item.Id</td>
+            <td>@item.Name</td>
+        </tr>
+    }
+    </table>
+
+}
+
+@code {
+
+    [Parameter]
+    public List<DataModel>? Collection { get; set; }
+
+}

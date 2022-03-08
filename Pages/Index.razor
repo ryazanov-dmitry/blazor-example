@@ -1,5 +1,17 @@
-﻿@page "/"
+﻿
+@page "/"
 
-Index
+<SimpleTable Collection=@_data />
 
 
+@code {
+
+    private List<DataModel>? _data;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _data = DataSource.GetData();
+    }
+
+}
