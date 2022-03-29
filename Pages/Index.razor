@@ -1,5 +1,8 @@
 ﻿@page "/"
 
+@inject DataSource DataSource
+
+
 <div class="table-container">
     <SimpleTable Collection=@_data />
 </div>
@@ -16,7 +19,10 @@
         base.OnInitialized();
         _data = DataSource.GetData();
         
-        DataSource.OnChange += () => InvokeAsync(StateHasChanged);
+        DataSource.OnChange += () => InvokeAsync(()=>{
+            _data = DataSource.GetData();
+            StateHasChanged();
+        });
     }
 
 }

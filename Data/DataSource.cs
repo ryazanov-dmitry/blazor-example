@@ -4,37 +4,24 @@ namespace blazor_example.Data;
 
 public class DataSource
 {
+    private readonly BlazorContext context;
 
-    public static event Action OnChange;
-
-    public static List<DataModel> Data =
-        new List<DataModel> {
-            new DataModel{
-                Id = Guid.NewGuid(),
-                Name = "Sintetic Data 1"
-            },
-            new DataModel{
-                Id = Guid.NewGuid(),
-                Name = "Sintetic Data 2"
-            },
-            new DataModel{
-                Id = Guid.NewGuid(),
-                Name = "Sintetic Data 3"
-            },
-        };
-
-    public static List<DataModel> GetData()
+    public DataSource(BlazorContext context)
     {
-        return Data;
+        this.context = context;
     }
 
-    public static void AddData(string name)
+    public event Action OnChange;
+
+    public List<DataModel> GetData()
     {
-        Data.Add(new DataModel
-        {
-            Id = Guid.NewGuid(),
-            Name = name
-        });
+        return context.Products.Select(x=>new DataModel{Id = x.Id, Name = x.Name}).ToList();
+    }
+
+    public void AddData(string name)
+    {
+        context.Products.Add(new Product { Name = name, CategoryId = 1 });
+        context.SaveChanges();
 
         OnChange?.Invoke();
     }
@@ -44,6 +31,6 @@ public class DataSource
 
 public class DataModel
 {
-    public Guid Id { get; internal set; }
+    public int Id { get; internal set; }
     public string? Name { get; set; }
 }
