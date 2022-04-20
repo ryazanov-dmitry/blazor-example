@@ -4,7 +4,8 @@
 
 <EditForm Model="@Model" OnSubmit="@HandleSubmit">
 
-    <InputText id="name" @bind-Value="Model.Value" />
+    <InputText id="name" @bind-Value="Model.Value" placeholder="Product Name"/>
+    <InputText id="imageUrl" @bind-Value="Model.ImageUrl" palceholder="Image Url"/>
 
     <button type="submit">Submit</button>
 </EditForm>
@@ -14,11 +15,12 @@
     public class FormModel
     {
         public string Value { get; set; }
+        public string ImageUrl { get; set; }
     }
     private FormModel Model { get; set; } = new FormModel();
 
     private void HandleSubmit()
     {
-        DataSource.AddData(Model.Value);
+        DataSource.AddData(Model);
     }
 }

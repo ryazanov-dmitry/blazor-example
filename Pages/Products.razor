@@ -1,0 +1,40 @@
+﻿@page "/products"
+
+@inject DataSource DataSource
+
+<div class="row">
+    @for (int i = 0; i < columnCount; i++)
+    {
+        <div class="column">
+            @for (int j = 0; j < maxColumnItemCount; j++)
+            {
+                var index = i * maxColumnItemCount + j;
+                if (index == _data.Count)
+                    break;
+                <ProductCard dataModel=@_data[index] />
+            }
+        </div>
+    }
+</div>
+
+
+@code {
+
+    private List<DataModel>? _data;
+    private int columnCount = 4;
+    private int maxColumnItemCount;
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        _data = DataSource.GetData();
+        maxColumnItemCount = (int)Math.Ceiling((decimal)_data.Count / columnCount);
+
+        DataSource.OnChange += () => InvokeAsync(() =>
+        {
+            _data = DataSource.GetData();
+            StateHasChanged();
+        });
+    }
+
+}

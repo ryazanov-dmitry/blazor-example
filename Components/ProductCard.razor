@@ -1,0 +1,11 @@
+@namespace blazor_example.Components
+
+
+    <img src="@dataModel.ImageUrl" />
+    <p>@dataModel.Name</p>
+
+@code {
+
+    [Parameter]
+    public DataModel dataModel { get; set; }
+}
